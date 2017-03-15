@@ -1,13 +1,12 @@
 // define(function()
 // {
+    var url = "http://139.59.38.230:8545";
+
     var abcTxEngine = {
         getBlockHeight: getBlockHeight
     }
 
-    //abcTxEngine.getBlockHeight
     function getBlockHeight () {
-        var url = "http://139.59.38.230:8545";
-
         var request = {
             id: 1,
             jsonrpc: "2.0",
@@ -15,7 +14,6 @@
             params: []
         };
 
-        //$.post(url, JSON.stringify(request), displaySearchResult, "json");
         $.post(url, JSON.stringify(request), function(response){
             var dec = parseInt(response.result, 16);
             alert(dec);
@@ -27,7 +25,47 @@
 
     }
 
-    function displaySearchResult(response) {
+    function getNumTransactions(options)
+    {
+
+    }
+
+    function getFreshAddress(options)
+    {
+
+    }
+
+    function addGapLimitAddresses(options)
+    {
+
+    }
+
+    function isAddressUsed(address, options)
+    {
+        return false;
+    }
+
+    function makeSpend(options)
+    {
+
+    }
+
+    function signTx(options)
+    {
+
+    }
+
+    function broadcastTx(options)
+    {
+
+    }
+
+    function saveTx(options)
+    {
+
+    }
+
+    function displayResult(response) {
 
         if (response.result)
                 alert(response.result);
