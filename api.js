@@ -1,9 +1,12 @@
 // define(function()
 // {
-    var url = "http://139.59.38.230:8545";
+    var url = "http://localhost:8545";
 
     var abcTxEngine = {
-        getBlockHeight: getBlockHeight
+        getBlockHeight: getBlockHeight,
+        getBalance: getBalance,
+        getNumTransactions: getNumTransactions,
+        isAddressUsed: isAddressUsed
     }
 
     function getBlockHeight () {
@@ -14,25 +17,44 @@
             params: []
         };
 
-        $.post(url, JSON.stringify(request), function(response){
-            var dec = parseInt(response.result, 16);
-            alert(dec);
-        });
+        var result = post(request);
     }
 
     function getBalance(options)
     {
+        var request = {
+            id: 1,
+            jsonrpc: "2.0",
+            method: "eth_getBalance",
+            params: ["0x365cb620d1d1b30d7224c04a18fecaf04113eeb6", "latest"]
+        };
 
+        var result = post(request);
     }
 
     function getNumTransactions(options)
     {
+        //'{"jsonrpc":"2.0","method":"eth_getTransactionCount","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1","latest"],"id":1}'
+        if (options == undefined)
+        {
+            options = ["0x365cb620d1d1b30d7224c04a18fecaf04113eeb6"];
+        }
 
+        var request = {
+            id: 1,
+            jsonrpc: "2.0",
+            method: "eth_getTransactionCount",
+            params: [options[0], "latest"]
+        };
+
+        var result = post(request);
     }
 
     function getFreshAddress(options)
     {
+        //unlock
 
+        //create new address
     }
 
     function addGapLimitAddresses(options)
@@ -42,7 +64,11 @@
 
     function isAddressUsed(address, options)
     {
-        return false;
+        //'{"jsonrpc":"2.0","method":"eth_getTransactionCount","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1","latest"],"id":1}'
+        address = "0x365cb620d1d1b30d7224c04a18fecaf04113eeb6";
+        var numberOfTransactions = getNumTransactions([address]);
+
+        return numberOfTransactions;
     }
 
     function makeSpend(options)
@@ -55,6 +81,7 @@
 
     }
 
+
     function broadcastTx(options)
     {
 
@@ -65,6 +92,7 @@
 
     }
 
+    //For testing
     function displayResult(response) {
 
         if (response.result)
@@ -73,5 +101,13 @@
         else if (response.error)
                 alert("Search error: " + response.error.message);
     };
+
+    function post(request)
+    {
+            $.post(url, JSON.stringify(request), function(response){
+            var dec = parseInt(response.result, 16);
+            alert(dec);
+        });
+    }
 //}
 //}
