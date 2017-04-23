@@ -22,20 +22,20 @@
 
     function getBalance(options)
     {
-
+        return 1;
     }
 
-    function getNumTransactions(options)
+    function getNumTransactions(options, Callback)
+    {
+        return 1;
+    }
+
+    function getFreshAddress(addresses, options)
     {
 
     }
 
-    function getFreshAddress(options)
-    {
-
-    }
-
-    function addGapLimitAddresses(options)
+    function addGapLimitAddresses(addresses, options)
     {
 
     }
@@ -45,7 +45,7 @@
         return false;
     }
 
-    function makeSpend(options)
+    function makeSpend(abcSpendInfo, Callback)
     {
 
     }
