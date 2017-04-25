@@ -22,13 +22,20 @@
 
     function getBalance(options)
     {
+        //0xfAc2682521Cc3Bd6F199b58F3cDEB9e802C02AfC
+        if (options == undefined)
+        {
+            options = ["0xfAc2682521Cc3Bd6F199b58F3cDEB9e802C02AfC"];
+        }
+
         var request = {
             id: 1,
             jsonrpc: "2.0",
             method: "eth_getBalance",
-            params: ["0x365cb620d1d1b30d7224c04a18fecaf04113eeb6", "latest"]
+            params: [options[0], "latest"]
         };
 
+        //var result = post(request);
         var result = post(request);
     }
 
@@ -37,7 +44,7 @@
         //'{"jsonrpc":"2.0","method":"eth_getTransactionCount","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1","latest"],"id":1}'
         if (options == undefined)
         {
-            options = ["0x365cb620d1d1b30d7224c04a18fecaf04113eeb6"];
+            options = ["0xfAc2682521Cc3Bd6F199b58F3cDEB9e802C02AfC"];
         }
 
         var request = {
@@ -104,10 +111,22 @@
 
     function post(request)
     {
-            $.post(url, JSON.stringify(request), function(response){
+        $.post(url, JSON.stringify(request), function(response){
             var dec = parseInt(response.result, 16);
             alert(dec);
         });
+    }
+
+    function xhrPost(request)
+    {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                alert(this.responseText);
+            }
+        };
+        xhttp.open("POST", url, true);
+        xhttp.send(request);
     }
 //}
 //}
