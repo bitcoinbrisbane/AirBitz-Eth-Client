@@ -1,6 +1,7 @@
 // define(function()
 // {
     var url = "http://localhost:8545";
+    //var url = "https://api.myetherapi.com/rop";
 
     var abcTxEngine = {
         getBlockHeight: getBlockHeight,

@@ -4,14 +4,21 @@
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <body>
 
-<button onclick="abcTxEngine.getBlockHeight()">Get Block Height</button>
+    <button onclick="abcTxEngine.getBlockHeight()">Get Block Height</button>
 
-<input id="address"></input>
-<button onclick="abcTxEngine.getBalance()">Get Balance</button>
+    <input id="address"></input>
+    <button onclick="balance()">Get Balance</button>
 
-<button onclick="abcTxEngine.getNumTransactions()">Get Number of Transactions</button>
+    <button onclick="abcTxEngine.getNumTransactions()">Get Number of Transactions</button>
 
-<button onclick="abcTxEngine.isAddressUsed()">Is Address in Use</button>
+    <button onclick="abcTxEngine.isAddressUsed()">Is Address in Use</button>
 
+    <script>
+        function balance() {
+            var address = $("#address").val();
+            var options = [address];
+            abcTxEngine.getBalance(options);
+        }
+    </script>
 </body>
 </html>
