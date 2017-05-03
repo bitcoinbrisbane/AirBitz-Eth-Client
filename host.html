@@ -3,21 +3,36 @@
     <script src="api.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <body>
+    <h1>Geth bash</h1>
+    <p>geth -testnet --rpc --networkid=39318 --cache=2048 --maxpeers=0 --rpccorsdomain "*" --rpcapi "eth,web3,personal,net,miner,admin,debug"</p>
 
+    <h2>Functions</h2>
     <button onclick="abcTxEngine.getBlockHeight()">Get Block Height</button>
 
-    <input id="address"></input>
+    <input id="address" value="0x01b382ad42e4e0b487dd4afa343980bfde0639fb"></input>
     <button onclick="balance()">Get Balance</button>
 
-    <button onclick="abcTxEngine.getNumTransactions()">Get Number of Transactions</button>
+    <button onclick="txCount()">Get Number of Transactions</button>
 
-    <button onclick="abcTxEngine.isAddressUsed()">Is Address in Use</button>
+    <button onclick="used()">Is Address in Use</button>
 
     <script>
         function balance() {
             var address = $("#address").val();
             var options = [address];
             abcTxEngine.getBalance(options);
+        }
+
+        function txCount() {
+            var address = $("#address").val();
+            var options = [address];
+            abcTxEngine.getNumTransactions(options, null);
+        }
+
+        function used() {
+            var address = $("#address").val();
+            var options = [];
+            abcTxEngine.isAddressUsed(address, options);
         }
     </script>
 </body>

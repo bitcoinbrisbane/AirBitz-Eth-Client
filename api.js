@@ -1,5 +1,4 @@
-// define(function()
-// {
+
     var url = "http://localhost:8545";
     //var url = "https://api.myetherapi.com/rop";
 
@@ -23,7 +22,6 @@
 
     function getBalance(options)
     {
-        //0xfAc2682521Cc3Bd6F199b58F3cDEB9e802C02AfC
         if (options == undefined)
         {
             options = ["0xfAc2682521Cc3Bd6F199b58F3cDEB9e802C02AfC"];
@@ -36,13 +34,11 @@
             params: [options[0], "latest"]
         };
 
-        //var result = post(request);
         var result = post(request);
     }
 
     function getNumTransactions(options, Callback)
     {
-        //'{"jsonrpc":"2.0","method":"eth_getTransactionCount","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1","latest"],"id":1}'
         if (options == undefined)
         {
             options = ["0xfAc2682521Cc3Bd6F199b58F3cDEB9e802C02AfC"];
@@ -72,11 +68,14 @@
 
     function isAddressUsed(address, options)
     {
-        //'{"jsonrpc":"2.0","method":"eth_getTransactionCount","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1","latest"],"id":1}'
-        address = "0x365cb620d1d1b30d7224c04a18fecaf04113eeb6";
         var numberOfTransactions = getNumTransactions([address]);
 
-        return numberOfTransactions;
+        if (numberOfTransactions > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     function makeSpend(abcSpendInfo, Callback)
@@ -92,7 +91,7 @@
 
     function broadcastTx(options)
     {
-
+        
     }
 
     function saveTx(options)
@@ -129,5 +128,3 @@
         xhttp.open("POST", url, true);
         xhttp.send(request);
     }
-//}
-//}
