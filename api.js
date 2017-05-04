@@ -34,7 +34,8 @@
             params: [options[0], "latest"]
         };
 
-        var result = post(request);
+        var response = post(request);
+        return parseInt(response.result, 16);
     }
 
     function getNumTransactions(options, Callback)
@@ -51,7 +52,8 @@
             params: [options[0], "latest"]
         };
 
-        var result = post(request);
+        var response = post(request);
+        return parseInt(response.result, 16);
     }
 
     function getFreshAddress(addresses, options)
@@ -111,10 +113,11 @@
 
     function post(request)
     {
-        $.post(url, JSON.stringify(request), function(response){
-            var dec = parseInt(response.result, 16);
-            alert(dec);
-        });
+        // $.post(url, JSON.stringify(request), function(response) {
+        //     //var dec = parseInt(response.result, 16);
+        // });
+
+        return $.post(url, JSON.stringify(request));
     }
 
     function xhrPost(request)
