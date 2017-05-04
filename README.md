@@ -1,8 +1,9 @@
 # AirBitz-Eth-Client
 
-geth -testnet --mine --rpc --networkid=39318 --cache=2048 --maxpeers=0 --rpccorsdomain "*" --rpcapi "eth,web3,personal,net,miner,admin,debug"
+geth -testnet --mine --rpc --cache=2048 --maxpeers=0 --rpccorsdomain "*" --rpcaddr "0.0.0.0" --rpcapi "eth,web3,personal,net,miner,admin,debug"
 
 curl http://localhost:8545 -X POST --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1337}'
+curl http://192.168.0.103:8545 -X POST --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1337}'
 
 Test accounts
 
@@ -14,5 +15,4 @@ On Ubuntu
 On Mac
 0x365cb620d1d1b30d7224c04a18fecaf04113eeb6
 0xfAc2682521Cc3Bd6F199b58F3cDEB9e802C02AfC
-
 1000000000000000000
