@@ -7,7 +7,7 @@
     <p>geth -testnet --rpc --networkid=39318 --cache=2048 --maxpeers=0 --rpccorsdomain "*" --rpcapi "eth,web3,personal,net,miner,admin,debug"</p>
 
     <h2>Functions</h2>
-    <button onclick="abcTxEngine.getBlockHeight()">Get Block Height</button>
+    <button onclick="height()">Get Block Height</button>
 
     <input id="address" value="0x01b382ad42e4e0b487dd4afa343980bfde0639fb"></input>
     <button onclick="balance()">Get Balance</button>
@@ -17,22 +17,35 @@
     <button onclick="used()">Is Address in Use</button>
 
     <script>
+        function height() {
+            abcTxEngine.getBlockHeight(function(response){
+                alert(response);
+            });
+        }
+
         function balance() {
             var address = $("#address").val();
             var options = [address];
-            abcTxEngine.getBalance(options);
+
+            // abcTxEngine.getBalance(options, function(result){
+            //     alert(result);
+            // });
+            var response = abcTxEngine.getBalance(options);
+            alert(response);
         }
 
         function txCount() {
             var address = $("#address").val();
             var options = [address];
-            abcTxEngine.getNumTransactions(options, null);
+            var response = abcTxEngine.getNumTransactions(options, null);
+            alert(response);
         }
 
         function used() {
             var address = $("#address").val();
             var options = [];
-            abcTxEngine.isAddressUsed(address, options);
+            var response = abcTxEngine.isAddressUsed(address, options);
+            alert(response);
         }
     </script>
 </body>

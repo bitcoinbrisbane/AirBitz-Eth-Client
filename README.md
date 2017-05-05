@@ -3,6 +3,7 @@
 geth -testnet --mine --rpc --networkid=39318 --cache=2048 --maxpeers=0 --rpccorsdomain "*" --rpcapi "eth,web3,personal,net,miner,admin,debug"
 
 curl http://localhost:8545 -X POST --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1337}'
+curl http://192.168.0.103:8545 -X POST --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1337}'
 
 Test accounts
 

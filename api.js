@@ -1,5 +1,6 @@
 
     var url = "http://localhost:8545";
+    //var url = "http://192.168.0.103";
     //var url = "https://api.myetherapi.com/rop";
 
     var abcTxEngine = {
@@ -17,7 +18,9 @@
             params: []
         };
 
-        var result = post(request);
+        post(request).then(function(response) {
+            return parseInt(response.result, 16);
+        });
     }
 
     function getBalance(options)
@@ -34,8 +37,9 @@
             params: [options[0], "latest"]
         };
 
-        var response = post(request);
-        return parseInt(response.result, 16);
+        post(request).then(function(response) {
+            return parseInt(response.result, 16);
+        });
     }
 
     function getNumTransactions(options, Callback)
@@ -113,8 +117,7 @@
 
     function post(request)
     {
-        // $.post(url, JSON.stringify(request), function(response) {
-        //     //var dec = parseInt(response.result, 16);
+        // return $.post(url, JSON.stringify(request), function(response) {
         // });
 
         return $.post(url, JSON.stringify(request));
