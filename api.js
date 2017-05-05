@@ -5,6 +5,7 @@
 
     var abcTxEngine = {
         getBlockHeight: getBlockHeight,
+        getBlockHeightX: getBlockHeightX,
         getBalance: getBalance,
         getNumTransactions: getNumTransactions,
         isAddressUsed: isAddressUsed
@@ -18,9 +19,20 @@
             params: []
         };
 
-        post(request).then(function(response) {
+        return post(request).then(function(response) {
             return parseInt(response.result, 16);
         });
+    }
+
+    function getBlockHeightX () {
+        var request = {
+            id: 1,
+            jsonrpc: "2.0",
+            method: "eth_blockNumber",
+            params: []
+        };
+
+        xhrPost(request);
     }
 
     function getBalance(options)
@@ -37,8 +49,8 @@
             params: [options[0], "latest"]
         };
 
-        post(request).then(function(response) {
-            return parseInt(response.result, 16);
+        return post(request).then(function(response) {
+            parseInt(response.result, 16);
         });
     }
 
@@ -117,9 +129,6 @@
 
     function post(request)
     {
-        // return $.post(url, JSON.stringify(request), function(response) {
-        // });
-
         return $.post(url, JSON.stringify(request));
     }
 

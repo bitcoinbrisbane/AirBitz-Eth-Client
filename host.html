@@ -18,9 +18,12 @@
 
     <script>
         function height() {
-            abcTxEngine.getBlockHeight(function(response){
-                alert(response);
+            abcTxEngine.getBlockHeight().then(function(n) {
+                alert(n);
             });
+
+            // var n = abcTxEngine.getBlockHeight();
+            // alert(n);
         }
 
         function balance() {
