@@ -1,14 +1,14 @@
 
-    var url = "http://localhost:8545";
+    var url = "http://60.226.74.183:8545";
     //var url = "http://192.168.0.103:8545";
-    //var url = "https://api.myetherapi.com/rop";
 
     var abcTxEngine = {
         getBlockHeight: getBlockHeight,
-        getBlockHeightX: getBlockHeightX,
+        //getBlockHeightX: getBlockHeightX,
         getBalance: getBalance,
         getNumTransactions: getNumTransactions,
-        isAddressUsed: isAddressUsed
+        isAddressUsed: isAddressUsed,
+        newAaddress: newAddress
     }
 
     function getBlockHeight () {
@@ -22,17 +22,6 @@
         return post(request).then(function(response) {
             return parseInt(response.result, 16);
         });
-    }
-
-    function getBlockHeightX () {
-        var request = {
-            id: 1,
-            jsonrpc: "2.0",
-            method: "eth_blockNumber",
-            params: []
-        };
-
-        xhrPost(request);
     }
 
     function getBalance(options)
@@ -50,7 +39,7 @@
         };
 
         return post(request).then(function(response) {
-            parseInt(response.result, 16);
+            return parseInt(response.result, 16);
         });
     }
 
@@ -68,8 +57,9 @@
             params: [options[0], "latest"]
         };
 
-        var response = post(request);
-        return parseInt(response.result, 16);
+        return post(request).then(function(response) {
+            return parseInt(response.result, 16);
+        });
     }
 
     function getFreshAddress(addresses, options)
@@ -96,10 +86,38 @@
         }
     }
 
+    function newAddress () {
+
+    }
+
     function makeSpend(abcSpendInfo, Callback)
     {
 
     }
+
+    function send(from, to, gas, gasPrice, value, data)
+    {
+        //curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sendTransaction","params":[{see above}],"id":1}'
+        var request = {
+            id: 1,
+            jsonrpc: "2.0",
+            method: "eth_blockNumber",
+            params: [{
+                from: from,
+                to: to,
+                gas: gas, // 30400,
+                gasPrice: gasPrice, // 10000000000000
+                value: value, // 2441406250
+                data: data
+                }]
+        };
+
+        return post(request).then(function(response) {
+            return parseInt(response.result, 16);
+        });
+    }
+
+
 
     function signTx(options)
     {
@@ -116,16 +134,6 @@
     {
 
     }
-
-    //For testing
-    function displayResult(response) {
-
-        if (response.result)
-                alert(response.result);
-
-        else if (response.error)
-                alert("Search error: " + response.error.message);
-    };
 
     function post(request)
     {

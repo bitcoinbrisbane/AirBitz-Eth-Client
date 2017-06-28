@@ -2,6 +2,7 @@
 <html>
     <script src="api.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="web3.js"></script>
 <body>
     <h1>Geth bash</h1>
     <p>geth -testnet --rpc --networkid=39318 --cache=2048 --maxpeers=0 --rpccorsdomain "*" --rpcapi "eth,web3,personal,net,miner,admin,debug"</p>
@@ -16,39 +17,60 @@
 
     <button onclick="used()">Is Address in Use</button>
 
+    <button onclick="newAccount()">Web3 Test</button>
+
     <script>
         function height() {
             abcTxEngine.getBlockHeight().then(function(n) {
                 alert(n);
             });
-
-            // var n = abcTxEngine.getBlockHeight();
-            // alert(n);
         }
 
         function balance() {
             var address = $("#address").val();
             var options = [address];
 
-            // abcTxEngine.getBalance(options, function(result){
-            //     alert(result);
-            // });
-            var response = abcTxEngine.getBalance(options);
-            alert(response);
+            abcTxEngine.getBalance(options).then(function(n) {
+                alert(n);
+            });
         }
 
         function txCount() {
             var address = $("#address").val();
             var options = [address];
-            var response = abcTxEngine.getNumTransactions(options, null);
-            alert(response);
+
+            abcTxEngine.abcTxEngine.getNumTransactions(options, null).then(function(n) {
+                alert(n);
+            });
         }
 
         function used() {
             var address = $("#address").val();
             var options = [];
-            var response = abcTxEngine.isAddressUsed(address, options);
-            alert(response);
+            
+            abcTxEngine.abcTxEngine.isAddressUsed(address, options).then(function(n) {
+                alert(response);
+            });            
+        }
+
+        function web3test()
+        {
+            var web3 = new Web3(new Web3.providers.HttpProvider("http://60.226.74.183:8545"));
+
+            web3.eth.getBlock(48, function(error, result){
+                if(!error)
+                    console.log(result)
+                else
+                    console.error(error);
+            })
+        }
+
+        function newAccount()
+        {
+            var web3 = new Web3(new Web3.providers.HttpProvider("http://60.226.74.183:8545"));
+
+            var newAccount = web3.personal.newAccount("yo");
+            console.log(newAccount);
         }
     </script>
 </body>
