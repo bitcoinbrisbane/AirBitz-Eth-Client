@@ -19,7 +19,9 @@
 
     <button onclick="used()">Is Address in Use</button>
 
-    <button onclick="newAccount()">Web3 Test</button>
+    <button onclick="newAccount()">Web3 New Account</button>
+
+    <button onclick="send()">Web3 Send</button>
 
     <script>
         function height() {
@@ -55,7 +57,7 @@
             });            
         }
 
-        function web3test()
+        function web3getBlock()
         {
             var web3 = new Web3(new Web3.providers.HttpProvider("http://60.226.74.183:8545"));
 
@@ -70,9 +72,58 @@
         function newAccount()
         {
             var web3 = new Web3(new Web3.providers.HttpProvider("http://60.226.74.183:8545"));
-
-            var newAccount = web3.personal.newAccount("yo");
+            
+            var password = "Test1234";
+            var newAccount = web3.personal.newAccount(password);
             console.log(newAccount);
+        }
+
+        function send()
+        {
+            var web3 = new Web3(new Web3.providers.HttpProvider("http://60.226.74.183:8545"));
+
+            var unlock = web3.personal.unlockAccount("0xd17611c999E946202d1237f0fFacCAf779f4f180", "yo");
+            var balance = web3.eth.getBalance("0xd17611c999E946202d1237f0fFacCAf779f4f180");
+
+            var response = web3.eth.sendTransaction({from:"0xd17611c999e946202d1237f0ffaccaf779f4f180", to:"0x5757b5c3d846ec22402339c9cbe9e207346b2f55", value: 0x0001});
+            console.log(response);
+        }
+
+        function getTransactionsByAccount(myaccount, startBlockNumber, endBlockNumber) {
+            if (endBlockNumber == null) {
+                endBlockNumber = eth.blockNumber;
+                console.log("Using endBlockNumber: " + endBlockNumber);
+            }
+            if (startBlockNumber == null) {
+                startBlockNumber = endBlockNumber - 1000;
+                console.log("Using startBlockNumber: " + startBlockNumber);
+            }
+            console.log("Searching for transactions to/from account \"" + myaccount + "\" within blocks "  + startBlockNumber + " and " + endBlockNumber);
+
+            for (var i = startBlockNumber; i <= endBlockNumber; i++) {
+                if (i % 1000 == 0) {
+                console.log("Searching block " + i);
+                }
+                var block = eth.getBlock(i, true);
+                if (block != null && block.transactions != null) {
+                block.transactions.forEach( function(e) {
+                    if (myaccount == "*" || myaccount == e.from || myaccount == e.to) {
+                    console.log("  tx hash          : " + e.hash + "\n"
+                        + "   nonce           : " + e.nonce + "\n"
+                        + "   blockHash       : " + e.blockHash + "\n"
+                        + "   blockNumber     : " + e.blockNumber + "\n"
+                        + "   transactionIndex: " + e.transactionIndex + "\n"
+                        + "   from            : " + e.from + "\n" 
+                        + "   to              : " + e.to + "\n"
+                        + "   value           : " + e.value + "\n"
+                        + "   time            : " + block.timestamp + " " + new Date(block.timestamp * 1000).toGMTString() + "\n"
+                        + "   gasPrice        : " + e.gasPrice + "\n"
+                        + "   gas             : " + e.gas + "\n"
+                        + "   input           : " + e.input);
+                    }
+                })
+                }
+            }
         }
     </script>
 </body>
